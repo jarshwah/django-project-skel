@@ -4,6 +4,10 @@ from settings import *
 
 DEBUG = True
 
+# override this locally only for development
+STATIC_ROOT = os.path.join(PUBLIC_DIR, 'static')
+MEDIA_ROOT = os.path.join(PUBLIC_DIR, 'media')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.

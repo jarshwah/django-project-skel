@@ -1,0 +1,105 @@
+#!/bin/sh
+#
+# uwsgi        Startup script for uwsgi
+#
+# chkconfig: - 85 15
+# processname: uwsgi
+# pidfile: /var/run/uwsgi.pid
+# description: uwsgi is an application server for the wsgi protocol
+#
+### BEGIN INIT INFO
+# Provides: uwsgi
+# Required-Start: $local_fs $remote_fs $network
+# Required-Stop: $local_fs $remote_fs $network
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: start and stop uwsgi
+### END INIT INFO
+
+# /etc/init.d/uwsgi
+
+USER=django
+DAEMON=/usr/bin/uwsgi
+VASSALDIR=/etc/uwsgi
+PIDDIR=/var/run/uwsgi
+PID=${PIDDIR}/uwsgi.pid
+LOGDIR=/var/log/uwsgi
+LOG=${LOGDIR}/uwsgi-emperor.log
+
+[[ -d $VASSALDIR ]] || mkdir -p $VASSALDIR && chown -R $USER $VASSALDIR && chmod +rw $VASSALDIR 
+[[ -d $LOGDIR ]] || mkdir -p $LOGDIR && chown -R $USER $LOGDIR
+[[ -d $PIDDIR ]] || mkdir -p $PIDDIR && chown -R $USER $PIDDIR
+
+do_pid_check()
+{
+    [[ -f $PID ]] && return 1
+    return 0
+}
+
+send_sig()
+{
+    set +e
+    [[ -f $PID ]] || echo "uwsgi not running"
+    [[ -f $PID ]] && kill $1 $(cat $PID) > /dev/null 2>&1
+    set -e
+}
+
+do_start() 
+{
+    if do_pid_check; then
+        echo "Starting uwsgi emperor"
+        runuser - $USER -c "$DAEMON --emperor $VASSALDIR --pidfile $PID --daemonize $LOG"
+    else
+        echo "uwsgi Already Running"
+    fi
+}
+
+do_stop() 
+{
+    echo "Stopping uwsgi emperor"
+    send_sig -3
+    rm -rf $PID
+}
+
+do_reload() 
+{
+    echo "Reloading uwsgi emperor"
+    send_sig -1
+}
+
+get_status()
+{
+    send_sig -10
+    if do_pid_check; then
+        echo "uwsgi not running"
+    else
+        echo "uwsgi is running"
+    fi
+}
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+    start)
+        do_start
+        ;;
+    stop)
+        do_stop
+        ;;
+    restart)
+        do_stop
+        sleep 1
+        do_start
+        ;;
+    reload)
+        do_reload
+        ;;
+    status)
+        get_status
+        ;;
+    *)
+        echo "Usage: /etc/init.d/uwsgi {start|stop|restart|reload|status}"
+        exit 1
+    ;;
+esac
+
+exit 0

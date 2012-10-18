@@ -13,6 +13,9 @@
 .settings
 atlassian-ide-plugin.xml
 
+# Logs
+*.log
+
 # Project
 /{{ project_name }}/local_settings.py
 /{{ project_name }}/public/static
