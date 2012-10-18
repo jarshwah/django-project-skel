@@ -3,7 +3,7 @@
 ## Using this Project Template ##
 
 ```bash
-django-admin.py startproject --template https://github.com/amccloud/django-project-skel/zipball/master --extension py,md,conf,ini,html YOURPROJECTNAME
+django-admin.py startproject --template https://github.com/jarshwah/django-project-skel/zipball/master --extension py,md,conf,ini,html YOURPROJECTNAME
 ```
 
 {% endcomment %}
