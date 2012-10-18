@@ -131,6 +131,9 @@ Then we use Fabric to do deployment
 workon {{ project_name }}
 
 fab production setup
+
+# now go to your server, and modify /home/django/sites/{{ project_name}}/local_settings.py with production settings
+
 fab production deploy
 fab production rollback
 fab production rollback # continually switches between "current" and "previous" releases

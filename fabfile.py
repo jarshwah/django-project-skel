@@ -16,6 +16,7 @@ def setup():
     """
     push_repo()
     run('mkdir -p %(path)s; cd %(path)s; virtualenv --no-site-packages .; mkdir releases; mkdir media; mkdir static' % env)
+    upload_template('{{ project_name }}/__local_settings.py', '%(path)s/local_settings.py' % env, context=None, use_sudo=False, backup=False, mode=0770)
     clone_repo()
     checkout_latest()
     install_requirements()
