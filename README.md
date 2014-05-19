@@ -130,9 +130,13 @@ Then we use Fabric to do deployment
 ```bash
 workon {{ project_name }}
 
+vim fabfile.py
+# edit in your production host in the hosts attribute within the production() function
+# then...
+
 fab production setup
 
-# now go to your server, and modify /home/django/sites/{{ project_name}}/local_settings.py with production settings
+# now go to your server, and modify /home/django/sites/{{ project_name }}/local_settings.py with production settings
 
 fab production deploy
 fab production rollback
