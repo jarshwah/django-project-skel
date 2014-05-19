@@ -1,8 +1,9 @@
 # Local settings for {{ project_name }} project.
 LOCAL_SETTINGS = True
-from settings import *
+from .settings import *  # NOQA
 
 DEBUG = True
+TEMPLATE_DEBUG = True
 
 DATABASES = {
     'default': {

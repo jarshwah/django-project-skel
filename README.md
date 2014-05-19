@@ -12,12 +12,12 @@ django-admin.py startproject --template https://github.com/jarshwah/django-proje
 
 ## Prerequisites ##
 
-- python >= 2.5
-- pip
-- virtualenv/virtualenvwrapper
+- python >= 3.4
 
 ## Installation ##
+
 ### Creating the environment ###
+
 Create a virtual python environment for the project.
 
 #### For virtualenvwrapper ####
