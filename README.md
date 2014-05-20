@@ -16,18 +16,6 @@ django-admin.py startproject --template https://github.com/jarshwah/django-proje
 
 ## Installation ##
 
-### Creating the environment ###
-
-Create a virtual python environment for the project.
-
-#### For virtualenvwrapper ####
-```bash
-export WORKON_HOME=~/.virtualenvs
-export PROJECT_HOME=~/path/to/repos
-mkproject {{ project_name }}
-workon {{ project_name }}
-```
-
 ### Clone the code ###
 Obtain the url to your git repository.
 
@@ -35,21 +23,28 @@ Obtain the url to your git repository.
 git clone <URL_TO_GIT_RESPOSITORY> {{ project_name }}
 ```
 
+### Setup Virtual Environment
+
+```bash
+cd {{ project_name }}
+pyvenv venv
+```
+
 ### Install requirements ###
 ```bash
-workon {{ project_name }}
+source bin/activate
 pip install -r requirements.txt
 ```
 
-### Configure project ###
+### Configure local project settings ###
 ```bash
 cp {{ project_name }}/__local_settings.py {{ project_name }}/local_settings.py
 vim {{ project_name }}/local_settings.py
 ```
 
-### Sync database ###
+### Migrate Database ###
 ```bash
-python manage.py syncdb
+python manage.py migrate
 ```
 
 ### Configure Logging ###
@@ -67,7 +62,9 @@ python manage.py runserver
 
 Open browser to http://127.0.0.1:8000
 
-# Deploying to Production (Redhat 5) #
+# Deploying to Production (Redhat 5) Example #
+
+## Note: This example is out of date, but left here as an example of using fabric
 
 Much of the installation setup has come from a 5 part series:
 
@@ -115,7 +112,12 @@ git init --bare
 ```
 
 At this point, you probably want to add your ssh key to the authorized_keys file of the django user to avoid
-constantly typing the ssh password of the django user.
+constantly typing the ssh password of the django user. Locally:
+
+```bash
+# from your machine
+ssh-copy-id django@prodserver
+```
 
 Add the production git repository as a remote from our local machine
 
