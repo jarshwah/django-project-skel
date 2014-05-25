@@ -26,7 +26,7 @@ PID=${PIDDIR}/uwsgi.pid
 LOGDIR=/var/log/uwsgi
 LOG=${LOGDIR}/uwsgi-emperor.log
 
-[[ -d $VASSALDIR ]] || mkdir -p $VASSALDIR && chown -R $USER $VASSALDIR && chmod +rw $VASSALDIR 
+[[ -d $VASSALDIR ]] || mkdir -p $VASSALDIR && chown -R $USER $VASSALDIR && chmod +rw $VASSALDIR
 [[ -d $LOGDIR ]] || mkdir -p $LOGDIR && chown -R $USER $LOGDIR
 [[ -d $PIDDIR ]] || mkdir -p $PIDDIR && chown -R $USER $PIDDIR
 
@@ -44,7 +44,7 @@ send_sig()
     set -e
 }
 
-do_start() 
+do_start()
 {
     if do_pid_check; then
         echo "Starting uwsgi emperor"
@@ -54,14 +54,14 @@ do_start()
     fi
 }
 
-do_stop() 
+do_stop()
 {
     echo "Stopping uwsgi emperor"
     send_sig -3
     rm -rf $PID
 }
 
-do_reload() 
+do_reload()
 {
     echo "Reloading uwsgi emperor"
     send_sig -1
